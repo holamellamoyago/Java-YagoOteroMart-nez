@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import Presentation.MainScreen;
 
 public class addProductScreen {
     @FXML
@@ -24,6 +25,12 @@ public class addProductScreen {
 
     @FXML
     private Text txtError;
+
+    private MainScreen mainScreen;
+
+    public void setMainScreen(MainScreen mainScreen){
+        this.mainScreen = mainScreen;
+    }
 
     @FXML
     private void saveProducts() {
@@ -40,6 +47,9 @@ public class addProductScreen {
 
             ReadWriteList.writeProducts(productos);
             txtFieldName.getScene().getWindow().hide();
+
+            mainScreen.loadProducts();
+            
 
         } else {
             productos = new ArrayList<>(List.of(newProduct));

@@ -41,4 +41,8 @@ public class ReadWriteList {
             e.printStackTrace();
         }
     }
+
+    public static List<Producto> deleteProduct(Producto product){
+        return new ArrayList<>();
+    }
 }

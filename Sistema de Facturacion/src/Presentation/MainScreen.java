@@ -46,31 +46,43 @@ public class MainScreen implements Initializable {
         loadProducts();
     }
 
-    private void loadProducts() {
+    public void loadProducts() {
         listAvaiables.setItems(FXCollections.observableArrayList(ReadWriteList.readProducts()));
     }
 
-    private void createFolderRepository() {
-        File carpeta = new File("src/Repository");
-        if (!carpeta.exists()) {
-            carpeta.mkdir();
-            loadProducts();
-        }
-        listAvaiables.setItems(FXCollections.observableArrayList());
-    }
+    // public void updateTitle(){
+    //     if (listAvaiables.getSelectionModel().getClass()) {
+            
+    //     }
+    // }
+
+    // private void createFolderRepository() {
+    //     File carpeta = new File("src/Repository");
+    //     if (!carpeta.exists()) {
+    //         carpeta.mkdir();
+    //         loadProducts();
+    //     }
+    //     listAvaiables.setItems(FXCollections.observableArrayList());
+    // }
 
     @FXML
     private void abrirDialogoPersonalizado() throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("addProductScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("addProductScreen.fxml"));
+        Parent root = loader.load();
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        addProductScreen controller = loader.getController();
+        controller.setMainScreen(this);
 
         stage.setTitle("Añadir producto");
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.centerOnScreen();
 
+
+
         stage.showAndWait();
     }
+
 }

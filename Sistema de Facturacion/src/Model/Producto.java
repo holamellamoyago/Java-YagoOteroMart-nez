@@ -2,7 +2,7 @@ package Model;
 
 import java.io.Serializable;
 
-public class Producto implements Serializable {
+public class Producto  implements Serializable, Comparable<Producto> {
     String name;
     int cuantity;
     boolean avaiable;
@@ -20,6 +20,11 @@ public class Producto implements Serializable {
     @Override
     public String toString() {
         return name + " - " + cuantity;
+    }
+
+    @Override
+    public int compareTo(Producto o) {
+        return o.name.compareTo(name);
     }
 
 }
