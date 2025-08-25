@@ -69,7 +69,7 @@
    <bottom>
       <HBox prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAddProduct" mnemonicParsing="false" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#abrirDialogoPersonalizado" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
