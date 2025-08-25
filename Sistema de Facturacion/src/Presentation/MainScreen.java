@@ -16,26 +16,37 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+
 
 public class MainScreen implements Initializable {
 
     @FXML
     private ListView<Producto> listAvaiables , listViewFinal;
 
+    @FXML
+    private Text txtCuantityProduct;
+
+    @FXML
+    private Text txtNameProduct;
+
+    @FXML
+    private Button btnAddProduct;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProducts();
     }
 
+    @SuppressWarnings("unchecked")
     private void loadProducts() {
         String url = "src/Repository/Productos.bin";
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(url));
-            
             List<Producto> products = (List<Producto>)in.readObject();
             listAvaiables.setItems(FXCollections.observableArrayList(products));
             in.close();
-            // listAvaiables.getItems().addAll(products);
 
         } catch (FileNotFoundException e) {
             createFolderRepository();
@@ -53,5 +64,6 @@ public class MainScreen implements Initializable {
             carpeta.mkdir();
             loadProducts();
         }
+        listAvaiables.setItems(FXCollections.observableArrayList());
     }
 }
