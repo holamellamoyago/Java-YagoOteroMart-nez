@@ -3,19 +3,23 @@ package Model;
 import java.io.Serializable;
 
 public class Producto implements Serializable {
-    String name; 
-    int stock;
+    String name;
     boolean avaiable;
 
-    public Producto(String name, int stock, boolean avaiable) {
+    public Producto(String name, boolean avaiable) {
         this.name = name;
-        this.stock = stock;
         this.avaiable = avaiable;
     }
 
-    public Producto(String name, int stock){
-        this(name, stock, true);
+    public Producto(String name) {
+        this(name, true);
+    }
+
+    @Override
+    public String toString() {
+        return "Producto [name=" + name + "]";
     }
 
     
+
 }
