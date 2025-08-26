@@ -42,7 +42,16 @@ public class ReadWriteList {
         }
     }
 
-    public static List<Producto> deleteProduct(Producto product){
-        return new ArrayList<>();
+    public static void deleteProduct(Producto product){
+        List<Producto> products = readProducts();
+
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).equals(product)) {
+                products.remove(i);
+            }
+        }
+
+        writeProducts(products);
+        
     }
 }

@@ -28,7 +28,7 @@ public class addProductScreen {
 
     private MainScreen mainScreen;
 
-    public void setMainScreen(MainScreen mainScreen){
+    public void setMainScreen(MainScreen mainScreen) {
         this.mainScreen = mainScreen;
     }
 
@@ -46,15 +46,19 @@ public class addProductScreen {
             productos.add(newProduct);
 
             ReadWriteList.writeProducts(productos);
-            txtFieldName.getScene().getWindow().hide();
+            txtFieldName.getScene().getWindow().hide(); // 1 
 
             mainScreen.loadProducts();
-            
 
         } else {
             productos = new ArrayList<>(List.of(newProduct));
             ReadWriteList.writeProducts(productos);
             txtFieldName.getScene().getWindow().hide();
         }
+    }
+
+    @FXML
+    private void closeDialog() {
+        txtFieldName.getScene().getWindow().hide();
     }
 }
