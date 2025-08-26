@@ -30,7 +30,7 @@
       <ListView fx:id="listViewFinal" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
    <left>
-      <ListView fx:id="listAvaiables" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="listAvaiables" onMouseClicked="#updateTitleCuantity" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </left>
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
@@ -81,7 +81,7 @@
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnAddProduct1" mnemonicParsing="false" onAction="#abrirDialogoPersonalizado" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Button fx:id="btnAddProduct1" mnemonicParsing="false" onAction="#updateTitleCuantity" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>

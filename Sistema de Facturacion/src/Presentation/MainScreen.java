@@ -29,8 +29,13 @@ import javafx.scene.control.Button;
 
 public class MainScreen implements Initializable {
 
+    List<Producto> products;
+
     @FXML
-    private ListView<Producto> listAvaiables, listViewFinal;
+    private ListView<String> listViewFinal;
+
+    @FXML
+    private ListView<String> listAvaiables;
 
     @FXML
     private Text txtCuantityProduct;
@@ -47,23 +52,33 @@ public class MainScreen implements Initializable {
     }
 
     public void loadProducts() {
-        listAvaiables.setItems(FXCollections.observableArrayList(ReadWriteList.readProducts()));
+        products = ReadWriteList.readProducts();
+        listAvaiables.setItems(FXCollections.observableArrayList());
+
+        for (int i = 0; i < products.size(); i++) {
+            listAvaiables.getItems().add(products.get(i).getName());
+        }
+
     }
 
-    // public void updateTitle(){
-    //     if (listAvaiables.getSelectionModel().getClass()) {
-            
-    //     }
-    // }
+    @FXML
+    private void updateTitleCuantity() {
+        Integer id = listAvaiables.getSelectionModel().getSelectedIndex();
+        
+        if (id != null) {
+            Producto pr = products.get(id);
+            if (!pr.getName().equals(txtNameProduct.getText())) {
+                txtNameProduct.setText(pr.getName());
 
-    // private void createFolderRepository() {
-    //     File carpeta = new File("src/Repository");
-    //     if (!carpeta.exists()) {
-    //         carpeta.mkdir();
-    //         loadProducts();
-    //     }
-    //     listAvaiables.setItems(FXCollections.observableArrayList());
-    // }
+                Integer n = pr.getCuantity();
+                txtCuantityProduct.setText(n.toString());
+            }
+        }
+
+        
+
+
+    }
 
     @FXML
     private void abrirDialogoPersonalizado() throws Exception {
@@ -79,8 +94,6 @@ public class MainScreen implements Initializable {
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.centerOnScreen();
-
-
 
         stage.showAndWait();
     }
