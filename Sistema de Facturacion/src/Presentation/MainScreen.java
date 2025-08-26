@@ -23,6 +23,21 @@ public class MainScreen implements Initializable {
     List<Producto> products;
 
     @FXML
+    private Button btnAdd;
+
+    @FXML
+    private Button btnAddProduct;
+
+    @FXML
+    private Button btnDeleteProduct;
+
+    @FXML
+    private Button btnNewProduct;
+
+    @FXML
+    private Button btnSubtract;
+
+    @FXML
     private ListView<String> listViewFinal;
 
     @FXML
@@ -33,9 +48,6 @@ public class MainScreen implements Initializable {
 
     @FXML
     private Text txtNameProduct;
-
-    @FXML
-    private Button btnAddProduct;
 
     @FXML
     private Text txtError;
@@ -55,10 +67,17 @@ public class MainScreen implements Initializable {
 
     }
 
-    private void restartTexts(){
-            txtError.setText("");
-            txtNameProduct.setText("Selecciona un producto");
-            txtCuantityProduct.setText("");
+    private void restartTexts() {
+        txtError.setText("");
+        txtNameProduct.setText("Selecciona un producto");
+        txtCuantityProduct.setText("");
+
+    }
+
+    private void turnOnButtons() {
+        btnAdd.setDisable(false);
+        btnSubtract.setDisable(false);
+        btnAddProduct.setDisable(false);
 
     }
 
@@ -68,6 +87,7 @@ public class MainScreen implements Initializable {
 
         if (id != null) {
             Producto pr = products.get(id);
+            turnOnButtons();
             if (!pr.getName().equals(txtNameProduct.getText())) {
                 txtNameProduct.setText(pr.getName());
 
@@ -99,7 +119,7 @@ public class MainScreen implements Initializable {
     @FXML
     private void deleteProduct() {
         Integer id = listAvaiables.getSelectionModel().getSelectedIndex();
-        
+
         if (id >= 0) {
             ReadWriteList.deleteProduct(products.get(id));
             loadProducts();

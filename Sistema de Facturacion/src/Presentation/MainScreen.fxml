@@ -42,18 +42,18 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="10.0" prefWidth="200.0">
                <children>
-                  <Text fx:id="txtCuantityProduct" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+                  <Text fx:id="txtCuantityProduct" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" text="-">
+                  <Button fx:id="btnSubtract" disable="true" mnemonicParsing="false" text="-">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" text="Añadir" />
-                  <Button mnemonicParsing="false" text="+">
+                  <Button fx:id="btnAddProduct" disable="true" mnemonicParsing="false" text="Añadir" />
+                  <Button fx:id="btnAdd" disable="true" mnemonicParsing="false" text="+">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -70,11 +70,11 @@
    <bottom>
       <HBox prefHeight="50.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#abrirDialogoPersonalizado" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Button fx:id="btnNewProduct" mnemonicParsing="false" onAction="#abrirDialogoPersonalizado" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../assets/add_3.png" />
+                        <Image url="@../Assets/add_3.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -82,11 +82,11 @@
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnAddProduct1" mnemonicParsing="false" onAction="#deleteProduct" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Button fx:id="btnDeleteProduct" mnemonicParsing="false" onAction="#deleteProduct" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../assets/delete.png" />
+                        <Image url="@../Assets/delete.png" />
                      </image>
                   </ImageView>
                </graphic>
