@@ -47,13 +47,13 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button fx:id="btnSubtract" disable="true" mnemonicParsing="false" text="-">
+                  <Button fx:id="btnSubtract" disable="true" mnemonicParsing="false" onAction="#substractCuantity" text="-">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnAddProduct" disable="true" mnemonicParsing="false" text="Añadir" />
-                  <Button fx:id="btnAdd" disable="true" mnemonicParsing="false" text="+">
+                  <Button fx:id="btnAddProduct" disable="true" mnemonicParsing="false" onAction="#addFinalProduct" text="Añadir" />
+                  <Button fx:id="btnAdd" disable="true" mnemonicParsing="false" onAction="#addCuantity" text="+">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
