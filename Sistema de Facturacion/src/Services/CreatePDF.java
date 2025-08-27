@@ -14,7 +14,6 @@ public class CreatePDF {
     private static PDDocument documento = new PDDocument();
     private static PDPage page = new PDPage();
     private static PDPageContentStream content;
-    // private static float pageWidth = page.getMediaBox().getWidth();
     private static float pageHeight = page.getMediaBox().getHeight();
     
     

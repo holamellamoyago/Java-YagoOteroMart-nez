@@ -8,10 +8,13 @@ import Model.Producto;
 import Services.CreatePDF;
 import Services.ReadWriteList;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +25,9 @@ import javafx.scene.control.Button;
 public class MainScreen implements Initializable {
 
     List<Producto> products;
+    
+    @FXML
+    TextField lasTextField; 
 
     @FXML
     private Button btnAdd;
@@ -172,6 +178,21 @@ public class MainScreen implements Initializable {
     @FXML
     private void createPDF(){
         CreatePDF.createPDF(listViewFinal.getItems());
+    }
+    
+    @FXML
+    private void handleLastTextField(MouseEvent e){
+        lasTextField = (TextField) e.getSource();
+    }
+
+    @FXML
+    private void handleNumpad(ActionEvent e){
+        Button btn = (Button) e.getSource();
+        String number = btn.getText();
+        if (lasTextField != null) {
+            lasTextField.setText(number);
+        }
+        
     }
 
 }

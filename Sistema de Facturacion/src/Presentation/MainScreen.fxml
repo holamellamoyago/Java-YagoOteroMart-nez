@@ -3,11 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -37,33 +41,40 @@
       <ListView fx:id="listAvaiables" onMouseClicked="#updateTitleCuantity" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <HBox prefHeight="10.0" prefWidth="200.0">
                <children>
                   <Text fx:id="txtNameProduct" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecciona un producto" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="10.0" prefWidth="200.0">
+            <TextField onMouseClicked="#handleLastTextField" promptText="Cuantity" text="a" />
+            <TextField onMouseClicked="#handleLastTextField" promptText="Price" />
+            <GridPane prefWidth="179.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                  <Text fx:id="txtCuantityProduct" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="4" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="3" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="7" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="2" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#handleNumpad" prefWidth="60.0" text="1" />
                </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Button fx:id="btnSubtract" disable="true" mnemonicParsing="false" onAction="#substractCuantity" text="-">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnAddProduct" disable="true" mnemonicParsing="false" onAction="#addFinalProduct" text="Añadir" />
-                  <Button fx:id="btnAdd" disable="true" mnemonicParsing="false" onAction="#addCuantity" text="+">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
+            </GridPane>
             <Text fx:id="txtError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
          <BorderPane.margin>
