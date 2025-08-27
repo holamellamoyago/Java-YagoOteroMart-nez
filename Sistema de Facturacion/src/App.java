@@ -23,9 +23,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    static PDDocument documento = new PDDocument();
-    static PDPage pagina = new PDPage();
-    PDFont fuente = loadFont();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -69,15 +67,5 @@ public class App extends Application {
 
     }
 
-    private static PDFont loadFont() {
-        try {
-            File archivoFuente = new File("lib/Roboto-Variable.ttf");
-            PDFont fuente = PDType0Font.load(documento, archivoFuente);
-
-            return fuente;
-        } catch (Exception e) {
-            throw new ArithmeticException("Error loading new fonts");
-        }
-    }
 
 }

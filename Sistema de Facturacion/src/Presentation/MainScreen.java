@@ -26,6 +26,9 @@ public class MainScreen implements Initializable {
 
     @FXML
     private Button btnAdd;
+    
+    @FXML
+    private Button btnCreatePDF;
 
     @FXML
     private Button btnAddProduct;
@@ -163,12 +166,6 @@ public class MainScreen implements Initializable {
     private void addFinalProduct() {
         int id = listAvaiables.getSelectionModel().getSelectedIndex();
         Producto pr = products.get(id);
-
-        // List<String> copy = listViewFinal.getItems();
-        // copy.add(pr.toString());
-
-        // listViewFinal.getItems().clear();
-        // listViewFinal.getItems().addAll(copy);
 
         listViewFinal.getItems().add(pr.toString());
 
