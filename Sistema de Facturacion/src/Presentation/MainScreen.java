@@ -1,14 +1,13 @@
 package Presentation;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import Model.Producto;
+import Services.CreatePDF;
 import Services.ReadWriteList;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -60,6 +59,7 @@ public class MainScreen implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProducts();
+        
     }
 
     public void loadProducts() {
@@ -82,11 +82,9 @@ public class MainScreen implements Initializable {
 
     private void turnOnButtons() {
 
-        boolean active = btnAdd.isDisable();
-
-        btnAdd.setDisable(!active);
-        btnSubtract.setDisable(!active);
-        btnAddProduct.setDisable(!active);
+        btnAdd.setDisable(false);
+        btnSubtract.setDisable(false);
+        btnAddProduct.setDisable(false);
 
     }
 
@@ -169,6 +167,11 @@ public class MainScreen implements Initializable {
 
         listViewFinal.getItems().add(pr.toString());
 
+    }
+
+    @FXML
+    private void createPDF(){
+        CreatePDF.createPDF(listViewFinal.getItems());
     }
 
 }
