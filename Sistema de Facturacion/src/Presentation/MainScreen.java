@@ -25,18 +25,23 @@ import javafx.scene.control.Button;
 public class MainScreen implements Initializable {
 
     List<Producto> products;
-    
-    @FXML
-    TextField lasTextField; 
+
+    TextField lasTextField;
 
     @FXML
-    private Button btnAdd;
-    
+    private TextField txtFieldCuantity;
+
+    @FXML
+    private TextField txtFieldPrice;
+
+    @FXML
+    private Text txtError;
+
+    @FXML
+    private Text txtNameProduct;
+
     @FXML
     private Button btnCreatePDF;
-
-    @FXML
-    private Button btnAddProduct;
 
     @FXML
     private Button btnDeleteProduct;
@@ -45,27 +50,15 @@ public class MainScreen implements Initializable {
     private Button btnNewProduct;
 
     @FXML
-    private Button btnSubtract;
-
-    @FXML
     private ListView<String> listViewFinal;
 
     @FXML
     private ListView<String> listAvaiables;
 
-    @FXML
-    private Text txtCuantityProduct;
-
-    @FXML
-    private Text txtNameProduct;
-
-    @FXML
-    private Text txtError;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProducts();
-        
+
     }
 
     public void loadProducts() {
@@ -79,20 +72,21 @@ public class MainScreen implements Initializable {
 
     }
 
-    private void restartTexts() {
+    private void restartTextFields() {
         txtError.setText("");
         txtNameProduct.setText("Selecciona un producto");
-        txtCuantityProduct.setText("");
+        txtFieldCuantity.setText("");
+        txtFieldPrice.setText("");
 
     }
 
-    private void turnOnButtons() {
+    // private void turnOnButtons() {
 
-        btnAdd.setDisable(false);
-        btnSubtract.setDisable(false);
-        btnAddProduct.setDisable(false);
+    // btnAdd.setDisable(false);
+    // btnSubtract.setDisable(false);
+    // btnAddProduct.setDisable(false);
 
-    }
+    // }
 
     @FXML
     private void updateTitleCuantity() {
@@ -100,14 +94,14 @@ public class MainScreen implements Initializable {
 
         if (id != null) {
             Producto pr = products.get(id);
-            if (!pr.getName().equals(txtNameProduct.getText())) {
+            if (!txtFieldCuantity.getText().equals(pr.getName())) {
                 txtNameProduct.setText(pr.getName());
-                Integer n = pr.getCuantity();
-                txtCuantityProduct.setText(n.toString());
-                turnOnButtons();
-
-            } else if (!txtCuantityProduct.getText().equals(Integer.toString(pr.getCuantity()))) {
-                txtCuantityProduct.setText(Integer.toString(products.get(id).getCuantity()));
+                txtFieldCuantity.setText(Integer.toString(pr.getCuantity()));
+                txtFieldPrice.setText(Double.toString(pr.getPrice()));
+            } else if (!txtFieldPrice.getText().equals(Double.toString(pr.getPrice()))) {
+                txtFieldPrice.setText(Double.toString(pr.getPrice()));
+            } else {
+                txtError.setText("Antes de eliminar, selecciona un producto");
             }
         }
 
@@ -138,8 +132,8 @@ public class MainScreen implements Initializable {
         if (id >= 0) {
             ReadWriteList.deleteProduct(products.get(id));
             loadProducts();
-            restartTexts();
-            turnOnButtons();
+            restartTextFields();
+
         } else {
             txtError.setText("Antes de eliminar, selecciona un producto");
         }
@@ -151,7 +145,6 @@ public class MainScreen implements Initializable {
         Producto pr = products.get(id);
         pr.setCuantity(pr.getCuantity() + 1);
 
-        updateTitleCuantity();
     }
 
     @FXML
@@ -161,7 +154,6 @@ public class MainScreen implements Initializable {
 
         if (pr.getCuantity() > 1) {
             pr.setCuantity(pr.getCuantity() - 1);
-            updateTitleCuantity();
         }
 
     }
@@ -169,30 +161,32 @@ public class MainScreen implements Initializable {
     @FXML
     private void addFinalProduct() {
         int id = listAvaiables.getSelectionModel().getSelectedIndex();
-        Producto pr = products.get(id);
 
-        listViewFinal.getItems().add(pr.toString());
+        if (id >= 0) {
+            Producto pr = products.get(id);
+            listViewFinal.getItems().add(pr.toString());
+        }
 
     }
 
     @FXML
-    private void createPDF(){
+    private void createPDF() {
         CreatePDF.createPDF(listViewFinal.getItems());
     }
-    
+
     @FXML
-    private void handleLastTextField(MouseEvent e){
+    private void handleLastTextField(MouseEvent e) {
         lasTextField = (TextField) e.getSource();
     }
 
     @FXML
-    private void handleNumpad(ActionEvent e){
+    private void handleNumpad(ActionEvent e) {
         Button btn = (Button) e.getSource();
         String number = btn.getText();
+
         if (lasTextField != null) {
-            lasTextField.setText(number);
+            lasTextField.appendText(number);
         }
-        
     }
 
 }
