@@ -27,7 +27,7 @@
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font></Text>
-                  <Text fx:id="txtError" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <Text fx:id="txtError" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </VBox>
          </children>
@@ -75,8 +75,8 @@
                   <Button mnemonicParsing="false" onAction="#handleNumpad" prefHeight="60.0" prefWidth="60.0" text="7" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" onAction="#handleNumpad" prefHeight="60.0" prefWidth="60.0" text="2" GridPane.columnIndex="1" />
                   <Button mnemonicParsing="false" onAction="#handleNumpad" prefHeight="60.0" prefWidth="60.0" text="1" />
-                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="," GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" text="CE" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#appendPoint" prefHeight="60.0" prefWidth="60.0" text="," GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#clearTextfield" prefHeight="60.0" prefWidth="60.0" text="CE" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>
@@ -122,7 +122,7 @@
             </Button>
             <Region prefHeight="200.0" prefWidth="650.0" />
             <ChoiceBox prefWidth="150.0" />
-            <Button mnemonicParsing="false" onAction="#createPDF" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
+            <Button mnemonicParsing="false" onAction="#openDialogCompany" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -1,5 +1,6 @@
 package Presentation;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -80,13 +81,6 @@ public class MainScreen implements Initializable {
 
     }
 
-    // private void turnOnButtons() {
-
-    // btnAdd.setDisable(false);
-    // btnSubtract.setDisable(false);
-    // btnAddProduct.setDisable(false);
-
-    // }
 
     @FXML
     private void updateTitleCuantity() {
@@ -108,24 +102,6 @@ public class MainScreen implements Initializable {
     }
 
     @FXML
-    private void abrirDialogoPersonalizado() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("addProductScreen.fxml"));
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        addProductScreen controller = loader.getController();
-        controller.setMainScreen(this);
-
-        stage.setTitle("Añadir producto");
-        stage.setResizable(false);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.centerOnScreen();
-
-        stage.showAndWait();
-    }
-
-    @FXML
     private void deleteProduct() {
         Integer id = listAvaiables.getSelectionModel().getSelectedIndex();
 
@@ -140,31 +116,18 @@ public class MainScreen implements Initializable {
     }
 
     @FXML
-    private void addCuantity() {
-        int id = listAvaiables.getSelectionModel().getSelectedIndex();
-        Producto pr = products.get(id);
-        pr.setCuantity(pr.getCuantity() + 1);
-
-    }
-
-    @FXML
-    private void substractCuantity() {
-        int id = listAvaiables.getSelectionModel().getSelectedIndex();
-        Producto pr = products.get(id);
-
-        if (pr.getCuantity() > 1) {
-            pr.setCuantity(pr.getCuantity() - 1);
-        }
-
-    }
-
-    @FXML
     private void addFinalProduct() {
         int id = listAvaiables.getSelectionModel().getSelectedIndex();
 
-        if (id >= 0) {
+        try {
+            if (id >= 0) {
             Producto pr = products.get(id);
+            pr.setCuantity(Integer.parseInt(txtFieldCuantity.getText()));
+            pr.setPrice(Double.parseDouble(txtFieldPrice.getText()));
             listViewFinal.getItems().add(pr.toString());
+        }
+        } catch (Exception e) {
+            txtError.setText(e.getMessage());
         }
 
     }
@@ -186,6 +149,63 @@ public class MainScreen implements Initializable {
 
         if (lasTextField != null) {
             lasTextField.appendText(number);
+        }
+    }
+
+    @FXML
+    private void clearTextfield(ActionEvent e){ 
+        if (lasTextField != null) {
+            lasTextField.setText("");
+        } else{
+            txtError.setText("Debes seleccionar primero un campo");
+        }
+    }
+
+    @FXML
+    private void appendPoint(){
+        if (lasTextField != null) {
+            lasTextField.appendText(".");
+        } else{
+            txtError.setText("Debes seleccionar primero un campo");
+        }
+    }
+
+    
+    @FXML
+    private void abrirDialogoPersonalizado() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("addProductScreen.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        addProductScreen controller = loader.getController();
+        controller.setMainScreen(this);
+
+        stage.setTitle("Añadir producto");
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.centerOnScreen();
+
+        stage.showAndWait();
+    }
+
+
+    @FXML
+    private void openDialogCompany(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("addCompanyScreen.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setTitle("Añadir empresa");
+
+            stage.show();
+            
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
