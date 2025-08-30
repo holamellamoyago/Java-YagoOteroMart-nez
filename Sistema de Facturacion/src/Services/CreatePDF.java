@@ -28,6 +28,7 @@ public class CreatePDF {
         try {
             content.close();
             documento.save("Factura.pdf");
+            System.out.println("Documento PDF Creado");
         } catch (IOException e) {
             e.printStackTrace();
         }
