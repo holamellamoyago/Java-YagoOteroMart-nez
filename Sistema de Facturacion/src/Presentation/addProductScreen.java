@@ -37,22 +37,24 @@ public class addProductScreen {
         File archivo = new File("Repository/Products.bin");
         Producto newProduct = new Producto(txtFieldName.getText());
         List<Producto> productos;
+        ReadWriteList<Producto> readWrite = new ReadWriteList<>("Products");
+
 
         if (txtFieldName.getText().equals("")) {
             txtError.setText("Debes añadir un nombre");
         } else if (archivo.exists()) {
 
-            productos = ReadWriteList.readProducts();
+            productos = readWrite.readProducts();
             productos.add(newProduct);
 
-            ReadWriteList.writeProducts(productos);
+            readWrite.writeProducts(productos);
             txtFieldName.getScene().getWindow().hide(); // 1 
 
             mainScreen.loadProducts();
 
         } else {
             productos = new ArrayList<>(List.of(newProduct));
-            ReadWriteList.writeProducts(productos);
+            readWrite.writeProducts(productos);
             txtFieldName.getScene().getWindow().hide();
         }
     }

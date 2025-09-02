@@ -7,20 +7,27 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import Model.Producto;
 
-public class ReadWriteList {
-    static File file = new File("Repository/Products.bin");
+public class ReadWriteList<T extends Serializable> {
+    // static File file = new File("Repository/Products.bin");
+    private String fileName;
 
-    public static List<Producto> readProducts(){
-        List<Producto> productos;
+
+    public ReadWriteList(String fileName) {
+        this.fileName = "Repository/"+fileName + ".bin";
+    }
+
+    public List<T> readProducts(){
+        List<T> productos;
 
         try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-            productos = (List<Producto>) in.readObject();
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+            productos = (List<T>) in.readObject();
 
             in.close();
             return productos;
@@ -30,9 +37,9 @@ public class ReadWriteList {
         }
     }
 
-    public static void writeProducts(List<Producto> products){
+    public void writeProducts(List<Producto> products){
         try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
             out.writeObject(products);
 
             out.close();
@@ -42,16 +49,16 @@ public class ReadWriteList {
         }
     }
 
-    public static void deleteProduct(Producto product){
-        List<Producto> products = readProducts();
+    // public void deleteProduct(T element){
+    //     List<Producto> products = readProducts();
 
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).equals(product)) {
-                products.remove(i);
-            }
-        }
+    //     for (int i = 0; i < products.size(); i++) {
+    //         if (products.get(i).equals(product)) {
+    //             products.remove(i);
+    //         }
+    //     }
 
-        writeProducts(products);
+    //     writeProducts(products);
         
-    }
+    // }
 }

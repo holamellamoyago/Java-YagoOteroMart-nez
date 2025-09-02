@@ -29,6 +29,8 @@ public class MainScreen implements Initializable {
 
     TextField lasTextField;
 
+    ReadWriteList<Producto> readwrit = new ReadWriteList<>("Products");
+
     @FXML
     private TextField txtFieldCuantity;
 
@@ -63,7 +65,7 @@ public class MainScreen implements Initializable {
     }
 
     public void loadProducts() {
-        products = ReadWriteList.readProducts();
+        products = readwrit.readProducts();
         listAvaiables.setItems(FXCollections.observableArrayList());
         listViewFinal.setItems(FXCollections.observableArrayList());
 
@@ -106,7 +108,7 @@ public class MainScreen implements Initializable {
         Integer id = listAvaiables.getSelectionModel().getSelectedIndex();
 
         if (id >= 0) {
-            ReadWriteList.deleteProduct(products.get(id));
+            // ReadWriteList.deleteProduct(products.get(id));
             loadProducts();
             restartTextFields();
 
