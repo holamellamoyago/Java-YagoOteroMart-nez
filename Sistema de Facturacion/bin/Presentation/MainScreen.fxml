@@ -109,8 +109,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ChoiceBox prefWidth="150.0" />
-            <Region prefHeight="200.0" prefWidth="650.0" />
+            <ChoiceBox fx:id="chBoxFirstCompany" prefHeight="40.0" prefWidth="600.0" />
             <Button mnemonicParsing="false" onAction="#addFinalProduct" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -121,7 +120,7 @@
                </graphic>
             </Button>
             <Region prefHeight="200.0" prefWidth="650.0" />
-            <ChoiceBox prefWidth="150.0" />
+            <ChoiceBox fx:id="chBoxSecondCompany" prefWidth="150.0" />
             <Button mnemonicParsing="false" onAction="#openDialogCompany" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">

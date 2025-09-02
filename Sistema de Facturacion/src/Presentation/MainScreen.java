@@ -5,10 +5,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import Model.Company;
 import Model.Producto;
 import Services.CreatePDF;
 import Services.ReadWriteList;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 
 public class MainScreen implements Initializable {
 
@@ -29,7 +32,8 @@ public class MainScreen implements Initializable {
 
     TextField lasTextField;
 
-    ReadWriteList<Producto> readwrit = new ReadWriteList<>("Products");
+    ReadWriteList<Producto> readwriteProducts = new ReadWriteList<>("Products");
+    ReadWriteList<Company> readwriteCompanies = new ReadWriteList<>("Companies");
 
     @FXML
     private TextField txtFieldCuantity;
@@ -58,14 +62,28 @@ public class MainScreen implements Initializable {
     @FXML
     private ListView<String> listAvaiables;
 
+    @FXML
+    private ChoiceBox<Company> chBoxFirstCompany;
+
+    @FXML
+    private ChoiceBox<Company> chBoxSecondCompany;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadProducts();
+        loadCompanies();
+    }
 
+    @FXML
+    private void loadCompanies() {
+        // ObservableList<Company> companies = FXCollections.observableList(readwriteCompanies.readProducts());
+        
+        chBoxFirstCompany.getItems().addAll(readwriteCompanies.readProducts());
+        chBoxFirstCompany.setItems(FXCollections.observableList(readwriteCompanies.readProducts()));
     }
 
     public void loadProducts() {
-        products = readwrit.readProducts();
+        products = readwriteProducts.readProducts();
         listAvaiables.setItems(FXCollections.observableArrayList());
         listViewFinal.setItems(FXCollections.observableArrayList());
 
@@ -83,12 +101,11 @@ public class MainScreen implements Initializable {
 
     }
 
-
     @FXML
     private void updateTitleCuantity() {
         Integer id = listAvaiables.getSelectionModel().getSelectedIndex();
 
-        if (id != null) {
+        if (id > -1) {
             Producto pr = products.get(id);
             if (!txtFieldCuantity.getText().equals(pr.getName())) {
                 txtNameProduct.setText(pr.getName());
@@ -107,14 +124,14 @@ public class MainScreen implements Initializable {
     private void deleteProduct() {
         Integer id = listAvaiables.getSelectionModel().getSelectedIndex();
 
-        if (id >= 0) {
-            // ReadWriteList.deleteProduct(products.get(id));
+        if (id > -1) {
+            readwriteProducts.writeProducts(readwriteProducts.deleteProduct(products.get(id), products));
             loadProducts();
             restartTextFields();
-
         } else {
             txtError.setText("Antes de eliminar, selecciona un producto");
         }
+
     }
 
     @FXML
@@ -123,11 +140,11 @@ public class MainScreen implements Initializable {
 
         try {
             if (id >= 0) {
-            Producto pr = products.get(id);
-            pr.setCuantity(Integer.parseInt(txtFieldCuantity.getText()));
-            pr.setPrice(Double.parseDouble(txtFieldPrice.getText()));
-            listViewFinal.getItems().add(pr.toString());
-        }
+                Producto pr = products.get(id);
+                pr.setCuantity(Integer.parseInt(txtFieldCuantity.getText()));
+                pr.setPrice(Double.parseDouble(txtFieldPrice.getText()));
+                listViewFinal.getItems().add(pr.toString());
+            }
         } catch (Exception e) {
             txtError.setText(e.getMessage());
         }
@@ -155,24 +172,23 @@ public class MainScreen implements Initializable {
     }
 
     @FXML
-    private void clearTextfield(ActionEvent e){ 
+    private void clearTextfield(ActionEvent e) {
         if (lasTextField != null) {
             lasTextField.setText("");
-        } else{
+        } else {
             txtError.setText("Debes seleccionar primero un campo");
         }
     }
 
     @FXML
-    private void appendPoint(){
+    private void appendPoint() {
         if (lasTextField != null) {
             lasTextField.appendText(".");
-        } else{
+        } else {
             txtError.setText("Debes seleccionar primero un campo");
         }
     }
 
-    
     @FXML
     private void abrirDialogoPersonalizado() throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("addProductScreen.fxml"));
@@ -191,9 +207,8 @@ public class MainScreen implements Initializable {
         stage.showAndWait();
     }
 
-
     @FXML
-    private void openDialogCompany(){
+    private void openDialogCompany() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("addCompanyScreen.fxml"));
             Parent root = loader.load();
@@ -204,7 +219,6 @@ public class MainScreen implements Initializable {
             stage.setTitle("Añadir empresa");
 
             stage.show();
-            
 
         } catch (IOException e) {
             e.printStackTrace();

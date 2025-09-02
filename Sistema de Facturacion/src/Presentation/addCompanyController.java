@@ -1,10 +1,18 @@
 package Presentation;
 
+import java.io.Serializable;
+import java.util.List;
+
+import Model.Company;
+import Services.ReadWriteList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 public class addCompanyController {
+
+    ReadWriteList<Company> readWrite = new ReadWriteList<>("Companies");
+
     @FXML
     private TextField txtFieldAdress, txtFieldCity, txtFieldCodPostal, txtFieldCode, txtFieldName, txtFieldPhoneNumber;
 
@@ -13,12 +21,25 @@ public class addCompanyController {
 
     @FXML
     private void saveCompany(){
+
+
         if (checkNulls()) {
+
+            Company company = new Company(txtFieldAdress.getText(), txtFieldCity.getText(),
+             txtFieldCode.getText(), txtFieldName.getText(), txtFieldCodPostal.getText(), txtFieldPhoneNumber.getText());
+
+            List<Company> companies = readWrite.readProducts();
+            companies.add(company);
+
+            readWrite.writeProducts(companies);
+
+            txtError.getScene().getWindow().hide();
+
             
         }
     }
 
-    private boolean checkNulls(){
+    private boolean checkNulls() {
         boolean camposCompletados = true;
 
         if (txtFieldAdress.getText().equals("")) {

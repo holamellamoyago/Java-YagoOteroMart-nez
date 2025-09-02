@@ -17,12 +17,11 @@ public class ReadWriteList<T extends Serializable> {
     // static File file = new File("Repository/Products.bin");
     private String fileName;
 
-
     public ReadWriteList(String fileName) {
-        this.fileName = "Repository/"+fileName + ".bin";
+        this.fileName = "Repository/" + fileName + ".bin";
     }
 
-    public List<T> readProducts(){
+    public List<T> readProducts() {
         List<T> productos;
 
         try {
@@ -31,13 +30,13 @@ public class ReadWriteList<T extends Serializable> {
 
             in.close();
             return productos;
-        } catch (IOException | ClassNotFoundException e ) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            
             return new ArrayList<>();
         }
     }
 
-    public void writeProducts(List<Producto> products){
+    public void writeProducts(List<T> products) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
             out.writeObject(products);
@@ -49,16 +48,15 @@ public class ReadWriteList<T extends Serializable> {
         }
     }
 
-    // public void deleteProduct(T element){
-    //     List<Producto> products = readProducts();
+    public List<T> deleteProduct(T element, List<T> elements) {
 
-    //     for (int i = 0; i < products.size(); i++) {
-    //         if (products.get(i).equals(product)) {
-    //             products.remove(i);
-    //         }
-    //     }
+        for (int i = 0; i < elements.size(); i++) {
+            if (elements.get(i).equals(element)) {
+                elements.remove(i);
+            }
+        }
 
-    //     writeProducts(products);
-        
-    // }
+        return elements;
+
+    }
 }
