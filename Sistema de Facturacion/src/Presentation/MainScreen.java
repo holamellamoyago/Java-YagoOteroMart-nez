@@ -9,6 +9,7 @@ import Model.Company;
 import Model.Producto;
 import Services.CreatePDF;
 import Services.ReadWriteList;
+import Services.Router;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -26,7 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 
-public class MainScreen implements Initializable {
+public class MainScreen implements Initializable, Router {
 
     List<Producto> products;
 
@@ -79,7 +81,9 @@ public class MainScreen implements Initializable {
         // ObservableList<Company> companies = FXCollections.observableList(readwriteCompanies.readProducts());
         
         chBoxFirstCompany.getItems().addAll(readwriteCompanies.readProducts());
-        chBoxFirstCompany.setItems(FXCollections.observableList(readwriteCompanies.readProducts()));
+        chBoxSecondCompany.getItems().addAll(readwriteCompanies.readProducts());
+        chBoxFirstCompany.getSelectionModel().select(0);
+        chBoxSecondCompany.getSelectionModel().select(0);
     }
 
     public void loadProducts() {
@@ -209,20 +213,24 @@ public class MainScreen implements Initializable {
 
     @FXML
     private void openDialogCompany() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("addCompanyScreen.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
+        // try {
+        //     FXMLLoader loader = new FXMLLoader(getClass().getResource("addCompanyScreen.fxml"));
+        //     Parent root = loader.load();
+        //     Scene scene = new Scene(root);
+        //     Stage stage = new Stage();
 
-            stage.setScene(scene);
-            stage.setTitle("Añadir empresa");
+        //     stage.setScene(scene);
+        //     stage.setTitle("Añadir empresa");
 
-            stage.show();
+        //     stage.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+
+        // TODO MEJORAR
+
+        openDialog(Router.OwnScreens.CompaniesScreen);
     }
 
 }

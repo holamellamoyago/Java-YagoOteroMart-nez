@@ -43,7 +43,7 @@
       <ListView fx:id="listAvaiables" onMouseClicked="#updateTitleCuantity" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <HBox prefHeight="10.0" prefWidth="200.0">
                <children>
@@ -51,6 +51,7 @@
                </children>
             </HBox>
             <TextField fx:id="txtFieldCuantity" onMouseClicked="#handleLastTextField" promptText="Cantidad" />
+            <Text fx:id="txtNameProduct1" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio por unidad" />
             <TextField fx:id="txtFieldPrice" onMouseClicked="#handleLastTextField" promptText="Precio" />
             <GridPane hgap="6.0" prefWidth="179.0" vgap="6.0">
               <columnConstraints>
@@ -92,7 +93,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Assets/add_3.png" />
+                        <Image url="@../Assets/add.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -109,7 +110,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ChoiceBox fx:id="chBoxFirstCompany" prefHeight="40.0" prefWidth="600.0" />
+            <ChoiceBox fx:id="chBoxFirstCompany" prefHeight="38.0" prefWidth="200.0" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
             <Button mnemonicParsing="false" onAction="#addFinalProduct" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -119,13 +121,13 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Region prefHeight="200.0" prefWidth="650.0" />
-            <ChoiceBox fx:id="chBoxSecondCompany" prefWidth="150.0" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <ChoiceBox fx:id="chBoxSecondCompany" prefHeight="38.0" prefWidth="200.0" />
             <Button mnemonicParsing="false" onAction="#openDialogCompany" textFill="TRANSPARENT" textOverrun="CENTER_WORD_ELLIPSIS">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Assets/business.png" />
+                        <Image url="@../Assets/company.png" />
                      </image>
                   </ImageView>
                </graphic>

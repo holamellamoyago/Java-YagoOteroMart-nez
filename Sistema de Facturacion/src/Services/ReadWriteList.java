@@ -49,14 +49,15 @@ public class ReadWriteList<T extends Serializable> {
     }
 
     public List<T> deleteProduct(T element, List<T> elements) {
+        List<T> newList = elements;
 
-        for (int i = 0; i < elements.size(); i++) {
-            if (elements.get(i).equals(element)) {
-                elements.remove(i);
+        for (int i = 0; i < newList.size(); i++) {
+            if (newList.get(i).equals(element)) {
+                newList.remove(i);
             }
         }
 
-        return elements;
+        return newList;
 
     }
 }
