@@ -10,17 +10,16 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
+import Model.Company;
+import Model.Producto;
+
 public class CreatePDF {
     private static PDDocument documento = new PDDocument();
     private static PDPage page = new PDPage();
     private static PDPageContentStream content;
     private static float pageHeight = page.getMediaBox().getHeight();
-    
-    
 
-
-
-    public static void createPDF(List<String> products){
+    public static void createPDF(List<Producto> products, List<Company> companies) {
         initializePDF();
 
         writeProducts(products);
@@ -32,10 +31,10 @@ public class CreatePDF {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 
-    private static void initializePDF(){
+    private static void initializePDF() {
         try {
             content = new PDPageContentStream(documento, page);
             documento.addPage(page);
@@ -46,24 +45,51 @@ public class CreatePDF {
         }
     }
 
-    private static void writeProducts(List<String> products){
+    private static void writeProducts(List<Producto> products) {
 
         int height = 50;
+
+
         for (int i = 0; i < products.size(); i++) {
+
+            int cuantity = products.get(i).getCuantity();
+            double price = products.get(i).getPrice();
+            double total = Double.valueOf(cuantity) * price;
+
+            int width = 50;
+            int addedWith = 300;
+
             try {
                 content.beginText();
+                content.newLineAtOffset(width, pageHeight - height);
+                content.showText(products.get(i).getName());
+                content.endText();
 
-                content.newLineAtOffset(10, pageHeight-height);
-                content.showText(products.get(i).toString());
+                width += addedWith;
+                content.beginText();
+                content.newLineAtOffset(width, pageHeight - height);
+                content.showText(Integer.toString(cuantity));
+                content.endText();
+
+                width += 100;
+                content.beginText();
+                content.newLineAtOffset(width, pageHeight - height);
+                content.showText(Double.toString(price));
+                content.endText();
+
+                width += 100;
+                content.beginText();
+                content.newLineAtOffset(width, pageHeight - height);
+                content.showText(Double.toString(total));
+                content.endText();
+
                 height += 20;
 
-                content.endText();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        
     }
 
     private static PDFont loadFont() {

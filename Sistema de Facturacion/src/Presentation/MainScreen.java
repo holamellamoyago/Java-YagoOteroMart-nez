@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListCell;
 
 public class MainScreen implements Initializable, Router {
 
@@ -59,10 +60,10 @@ public class MainScreen implements Initializable, Router {
     private Button btnNewProduct;
 
     @FXML
-    private ListView<String> listViewFinal;
+    private ListView<Producto> listViewFinal;
 
     @FXML
-    private ListView<String> listAvaiables;
+    private ListView<Producto> listAvaiables;
 
     @FXML
     private ChoiceBox<Company> chBoxFirstCompany;
@@ -74,17 +75,26 @@ public class MainScreen implements Initializable, Router {
     public void initialize(URL location, ResourceBundle resources) {
         loadProducts();
         loadCompanies();
+        // loadPDF();
     }
 
     @FXML
     private void loadCompanies() {
-        // ObservableList<Company> companies = FXCollections.observableList(readwriteCompanies.readProducts());
-        
+
         chBoxFirstCompany.getItems().addAll(readwriteCompanies.readProducts());
         chBoxSecondCompany.getItems().addAll(readwriteCompanies.readProducts());
-        chBoxFirstCompany.getSelectionModel().select(0);
-        chBoxSecondCompany.getSelectionModel().select(0);
+
     }
+
+    // private void loadPDF(){
+    // chBoxFirstCompany.getSelectionModel().select(0);
+    // chBoxSecondCompany.getSelectionModel().select(1);
+
+    // for (int i = 0; i < 1; i++) {
+    // Producto pr1 = products.get(i);
+
+    // }
+    // }
 
     public void loadProducts() {
         products = readwriteProducts.readProducts();
@@ -92,8 +102,16 @@ public class MainScreen implements Initializable, Router {
         listViewFinal.setItems(FXCollections.observableArrayList());
 
         for (int i = 0; i < products.size(); i++) {
-            listAvaiables.getItems().add(products.get(i).getName());
+            listAvaiables.getItems().add(products.get(i));
         }
+
+        listAvaiables.setCellFactory(lv -> new ListCell<Producto>() {
+            @Override
+            protected void updateItem(Producto item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getName());
+            }
+        });
 
     }
 
@@ -147,7 +165,11 @@ public class MainScreen implements Initializable, Router {
                 Producto pr = products.get(id);
                 pr.setCuantity(Integer.parseInt(txtFieldCuantity.getText()));
                 pr.setPrice(Double.parseDouble(txtFieldPrice.getText()));
-                listViewFinal.getItems().add(pr.toString());
+                listViewFinal.getItems().add(pr);
+
+                // TODO HACER X T , loadproducts
+                renombrar();
+
             }
         } catch (Exception e) {
             txtError.setText(e.getMessage());
@@ -155,9 +177,27 @@ public class MainScreen implements Initializable, Router {
 
     }
 
+    private void renombrar() {
+
+        if (listViewFinal.getItems().size() > 0) {
+
+            listViewFinal.setCellFactory(lv -> new ListCell<Producto>() {
+                @Override
+                protected void updateItem(Producto item, boolean empty) {
+                    if (item != null) {
+                        String s = item.getName() + ", Cantidad:" + item.getCuantity() + ", " + item.getPrice() + "€";
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? "" : s);
+                    }
+                }
+            });
+        }
+
+    }
+
     @FXML
     private void createPDF() {
-        CreatePDF.createPDF(listViewFinal.getItems());
+        CreatePDF.createPDF(listViewFinal.getItems(), readwriteCompanies.readProducts());
     }
 
     @FXML
@@ -214,18 +254,19 @@ public class MainScreen implements Initializable, Router {
     @FXML
     private void openDialogCompany() {
         // try {
-        //     FXMLLoader loader = new FXMLLoader(getClass().getResource("addCompanyScreen.fxml"));
-        //     Parent root = loader.load();
-        //     Scene scene = new Scene(root);
-        //     Stage stage = new Stage();
+        // FXMLLoader loader = new
+        // FXMLLoader(getClass().getResource("addCompanyScreen.fxml"));
+        // Parent root = loader.load();
+        // Scene scene = new Scene(root);
+        // Stage stage = new Stage();
 
-        //     stage.setScene(scene);
-        //     stage.setTitle("Añadir empresa");
+        // stage.setScene(scene);
+        // stage.setTitle("Añadir empresa");
 
-        //     stage.show();
+        // stage.show();
 
         // } catch (IOException e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
 
         // TODO MEJORAR
