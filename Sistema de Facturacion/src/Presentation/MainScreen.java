@@ -185,7 +185,7 @@ public class MainScreen implements Initializable, Router {
                 @Override
                 protected void updateItem(Producto item, boolean empty) {
                     if (item != null) {
-                        String s = item.getName() + ", Cantidad:" + item.getCuantity() + ", " + item.getPrice() + "€";
+                        String s = item.getName() + ", Cantidad: " + item.getCuantity() + ", " + item.getPrice() + "€";
                         super.updateItem(item, empty);
                         setText(empty || item == null ? "" : s);
                     }
