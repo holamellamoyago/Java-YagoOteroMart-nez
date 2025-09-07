@@ -2,6 +2,7 @@ package Presentation;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -197,7 +198,10 @@ public class MainScreen implements Initializable, Router {
 
     @FXML
     private void createPDF() {
-        CreatePDF.createPDF(listViewFinal.getItems(), readwriteCompanies.readProducts());
+        Company a = chBoxFirstCompany.selectionModelProperty().get().getSelectedItem();
+        Company b = chBoxSecondCompany.selectionModelProperty().get().getSelectedItem();
+
+        CreatePDF.createPDF(listViewFinal.getItems(), new ArrayList<>(List.of(a,b)));
     }
 
     @FXML
