@@ -10,6 +10,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
+
 import Model.Company;
 import Model.Producto;
 
@@ -20,10 +21,15 @@ public class CreatePDF {
     private static float pageHeight = page.getMediaBox().getHeight();
     private static float pageWidth = page.getMediaBox().getWidth();
 
+    private static final int heightCompany = 50;
+    private static final int heightProducts = 50;
+
     public static void createPDF(List<Producto> products, List<Company> companies) {
         initializePDF();
 
         writeProducts(products);
+
+        writeCompanies(companies);
 
         try {
             content.close();
@@ -35,8 +41,86 @@ public class CreatePDF {
 
     }
 
+    private static void writeDetailscompany(String t, int height, boolean rightAlign) {
 
-    private static void writeCompany(){
+        float x;
+
+        try {
+
+            if (rightAlign) {
+                float textWidth = loadFont().getStringWidth(t) / 1000 * 12;
+                x = pageWidth - textWidth - 50;
+
+            } else {
+                x = 50;
+            }
+
+            content.beginText();
+            content.newLineAtOffset(x, pageHeight - height);
+            content.showText(t);
+            content.endText();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void writeCompany(Company company, boolean rightAlign) {
+
+        int height = heightCompany;
+
+        try {
+
+            writeDetailscompany("DATOS DEL CLIENTE", height, rightAlign);
+
+            height += 30;
+
+            writeDetailscompany(company.getName(), height, rightAlign);
+
+            height += 25;
+
+            writeDetailscompany(company.getCompanyCode(), height, rightAlign);
+
+            height += 25;
+
+            writeDetailscompany(company.getAdress(), height, rightAlign);
+
+            height += 25;
+
+            writeDetailscompany(company.getPostal() + ", " + company.getCity(), height, rightAlign);
+
+            height += 25;
+
+            writeDetailscompany(company.getPhoneNumber(), height, rightAlign);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void writeCompanies(List<Company> companies) {
+
+        final Company firstCompany = companies.get(0);
+        final Company secondCompany = companies.get(1);
+
+        int height = 50;
+
+        writeCompany(firstCompany, false);
+        writeCompany(secondCompany, true);
+
+        try {
+
+            float mitad = pageWidth / 2;
+
+            content.setStrokingColor(0, 0, 0);
+            content.moveTo(mitad, pageHeight - 40); // Punto inicial (x=50, y=alto-40)
+            content.lineTo(mitad, pageHeight - 200); // Punto final (x=500, y=alto-40)
+            content.stroke(); // Dibuja la línea
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } // Color negro
 
     }
 
@@ -44,7 +128,7 @@ public class CreatePDF {
         try {
             content = new PDPageContentStream(documento, page);
             documento.addPage(page);
-            content.setFont(loadFont(), 16);
+            content.setFont(loadFont(), 12);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +137,7 @@ public class CreatePDF {
 
     private static void writeProducts(List<Producto> products) {
 
-        int height = 30;
+        int height = 500;
         final int WIDTHNAME = 50;
         final int WIDTHCUANTITY = 335;
         final int WIDTHPRICE = 435;
@@ -63,7 +147,7 @@ public class CreatePDF {
 
         try {
             content.beginText();
-            content.newLineAtOffset(WIDTHNAME , pageHeight - height);
+            content.newLineAtOffset(WIDTHNAME, pageHeight - height);
             content.showText("DETALLE");
             content.endText();
 
@@ -82,7 +166,7 @@ public class CreatePDF {
             content.showText("TOTAL");
             content.endText();
 
-            height += 25;
+            height += 10;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,14 +174,14 @@ public class CreatePDF {
 
         try {
             content.setStrokingColor(0, 0, 0);
-            content.moveTo(50, pageHeight - 40); // Punto inicial (x=50, y=alto-40)
-            content.lineTo(pageWidth-50, pageHeight - 40); // Punto final (x=500, y=alto-40)
+            content.moveTo(50, pageHeight - height); // Punto inicial (x=50, y=alto-40)
+            content.lineTo(pageWidth - 50, pageHeight - height); // Punto final (x=500, y=alto-40)
             content.stroke(); // Dibuja la línea
         } catch (IOException e) {
             e.printStackTrace();
         } // Color negro
 
-        height+= 10;
+        height += 20;
 
         for (int i = 0; i < products.size(); i++) {
 

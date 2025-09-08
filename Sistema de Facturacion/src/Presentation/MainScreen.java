@@ -85,6 +85,14 @@ public class MainScreen implements Initializable, Router {
         chBoxFirstCompany.getItems().addAll(readwriteCompanies.readProducts());
         chBoxSecondCompany.getItems().addAll(readwriteCompanies.readProducts());
 
+        // Selecciona el primer elemento por defecto
+        if (!chBoxFirstCompany.getItems().isEmpty()) {
+            chBoxFirstCompany.getSelectionModel().select(0);
+        }
+        if (!chBoxSecondCompany.getItems().isEmpty()) {
+            chBoxSecondCompany.getSelectionModel().select(1);
+        }
+
     }
 
     // private void loadPDF(){
@@ -201,7 +209,7 @@ public class MainScreen implements Initializable, Router {
         Company a = chBoxFirstCompany.selectionModelProperty().get().getSelectedItem();
         Company b = chBoxSecondCompany.selectionModelProperty().get().getSelectedItem();
 
-        CreatePDF.createPDF(listViewFinal.getItems(), new ArrayList<>(List.of(a,b)));
+        CreatePDF.createPDF(listViewFinal.getItems(), new ArrayList<>(List.of(a, b)));
     }
 
     @FXML

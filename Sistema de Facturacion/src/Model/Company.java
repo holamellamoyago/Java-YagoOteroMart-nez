@@ -51,6 +51,32 @@ public class Company implements Serializable{
         return true;
     }
 
+    public String getAdress() {
+        return adress;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPostal() {
+        return postal;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    
+
     
 
 
