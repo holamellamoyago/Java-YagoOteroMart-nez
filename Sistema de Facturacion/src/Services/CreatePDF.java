@@ -10,7 +10,6 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
-
 import Model.Company;
 import Model.Producto;
 
@@ -21,8 +20,8 @@ public class CreatePDF {
     private static float pageHeight = page.getMediaBox().getHeight();
     private static float pageWidth = page.getMediaBox().getWidth();
 
-    private static final int heightCompany = 50;
-    private static final int heightProducts = 50;
+    private static final int heightCompany = 200;
+    private static final int heightProducts = 400;
 
     public static void createPDF(List<Producto> products, List<Company> companies) {
         initializePDF();
@@ -107,21 +106,26 @@ public class CreatePDF {
         int height = 50;
 
         writeCompany(firstCompany, false);
+
+        drawVerticalLine(pageHeight-heightCompany + 20, pageHeight-heightCompany-150);
+
         writeCompany(secondCompany, true);
 
+    }
+
+    private static void drawVerticalLine(float height, float finalHeight) {
         try {
 
             float mitad = pageWidth / 2;
 
             content.setStrokingColor(0, 0, 0);
-            content.moveTo(mitad, pageHeight - 40); // Punto inicial (x=50, y=alto-40)
-            content.lineTo(mitad, pageHeight - 200); // Punto final (x=500, y=alto-40)
+            content.moveTo(mitad, height); // Punto inicial (x=50, y=alto-40)
+            content.lineTo(mitad, finalHeight); // Punto final (x=500, y=alto-40)
             content.stroke(); // Dibuja la línea
 
         } catch (IOException e) {
             e.printStackTrace();
         } // Color negro
-
     }
 
     private static void initializePDF() {
@@ -137,7 +141,7 @@ public class CreatePDF {
 
     private static void writeProducts(List<Producto> products) {
 
-        int height = 500;
+        int height = heightProducts;
         final int WIDTHNAME = 50;
         final int WIDTHCUANTITY = 335;
         final int WIDTHPRICE = 435;
