@@ -76,7 +76,8 @@ public class MainScreen implements Initializable, Router {
     public void initialize(URL location, ResourceBundle resources) {
         loadProducts();
         loadCompanies();
-        // loadPDF();
+        
+        createPDF();
     }
 
     @FXML

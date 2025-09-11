@@ -1,8 +1,22 @@
 package Services;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
+
+import javax.swing.text.DateFormatter;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -12,6 +26,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
 import Model.Company;
 import Model.Producto;
+import javafx.util.converter.LocalDateStringConverter;
 
 public class CreatePDF {
     private static PDDocument documento = new PDDocument();
@@ -20,6 +35,7 @@ public class CreatePDF {
     private static float pageHeight = page.getMediaBox().getHeight();
     private static float pageWidth = page.getMediaBox().getWidth();
 
+    private static final int heightHeader = 50;
     private static final int heightCompany = 200;
     private static final int heightProducts = 400;
 
@@ -30,11 +46,80 @@ public class CreatePDF {
 
         writeCompanies(companies);
 
+        writeHeader();
+
         try {
             content.close();
             documento.save("Factura.pdf");
             System.out.println("Documento PDF Creado");
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void writeHeader() {
+        writeDate();
+
+        writeNumberOfBill();
+
+    }
+
+    private static void writeNumberOfBill() {
+        File totalFile = new File("Repository/TotalNumber.txt");
+
+        try {
+            Scanner sc = new Scanner(totalFile);
+            String s = sc.nextLine();
+
+            updateNumberBill(s, totalFile);
+
+            content.beginText();
+            content.newLineAtOffset(50, pageHeight - heightHeader - 30);
+            content.showText("FACTURA");
+            content.endText();
+
+            content.beginText();
+            content.newLineAtOffset(50, pageHeight - heightHeader - 50);
+            content.showText("Nº: " + s);
+            content.endText();
+
+
+            sc.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String updateNumberBill(String s, File totalFile) {
+        int n = Integer.valueOf(s) + 1;
+        s = Integer.toString(n);
+
+        try {
+            FileWriter out;
+            out = new FileWriter(totalFile);
+            out.write(s);
+            out.close();
+
+            return s;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
+    private static void writeDate() {
+
+        try {
+            content.beginText();
+            content.newLineAtOffset(50, pageHeight - heightHeader);
+
+            String fecha = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            content.showText(fecha);
+            content.endText();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -107,7 +192,7 @@ public class CreatePDF {
 
         writeCompany(firstCompany, false);
 
-        drawVerticalLine(pageHeight-heightCompany + 20, pageHeight-heightCompany-150);
+        drawVerticalLine(pageHeight - heightCompany + 20, pageHeight - heightCompany - 150);
 
         writeCompany(secondCompany, true);
 
